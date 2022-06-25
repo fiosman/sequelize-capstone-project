@@ -9,8 +9,11 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      Classroom.hasMany(models.StudentClassroom);
-      Classroom.belongsToMany(models.Student, { through: models.StudentClassroom });
+      Classroom.hasMany(models.StudentClassroom, { foreignKey: "classroomId" });
+      Classroom.belongsToMany(models.Student, {
+        through: models.StudentClassroom,
+        foreignKey: "studentId",
+      });
       Classroom.hasMany(models.Supply, {
         foreignKey: "classroomId",
         onDelete: "CASCADE",

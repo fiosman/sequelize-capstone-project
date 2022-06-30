@@ -7,6 +7,15 @@ const { Supply } = require("../models");
 
 // List of supplies by category
 router.get("/category/:categoryName", async (req, res, next) => {
+  return await Supply.findAll(
+    { where: { category: req.body.category } },
+    {
+      order: [
+        ["name", "ASC"],
+        ["handed", "ASC"],
+      ],
+    }
+  );
   // Phase 1C:
   // Find all supplies by category name
   // Order results by supply's name then handed

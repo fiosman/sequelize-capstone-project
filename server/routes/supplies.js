@@ -13,7 +13,7 @@ router.get("/category/:categoryName", async (req, res, next) => {
   // Return the found supplies as the response body
   try {
     const supplies = Supply.findAll(
-      { where: { category: req.params.category } },
+      { where: { category: req.params.categoryName } },
       {
         order: [
           ["name", "ASC"],

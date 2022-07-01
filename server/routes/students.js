@@ -12,7 +12,7 @@ router.get("/", async (req, res, next) => {
 
   // Phase 2A: Use query params for page & size
   // Your code here
-
+  const { page, size } = req.query;
   // Phase 2B: Calculate limit and offset
   // Phase 2B (optional): Special case to return all students (page=0, size=0)
   // Phase 2B: Add an error message to errorResult.errors of

@@ -13,7 +13,16 @@ router.get("/", async (req, res, next) => {
   // Phase 2A: Use query params for page & size
   // Your code here
   const { page = 1, size = 10 } = req.query;
+  let limit;
+  let offset;
   // Phase 2B: Calculate limit and offset
+  if (page > 0 && size > 0) {
+    limit = size;
+    offset = (page - 1) * size;
+  } else {
+    limit = 0;
+    offset = 0;
+  }
   // Phase 2B (optional): Special case to return all students (page=0, size=0)
   // Phase 2B: Add an error message to errorResult.errors of
   // 'Requires valid page and size params' when page or size is invalid

@@ -19,15 +19,17 @@ router.get("/", async (req, res, next) => {
   if (page > 0 && size > 0) {
     limit = size;
     offset = (page - 1) * size;
+    // Phase 2B (optional): Special case to return all students (page=0, size=0)
+    // Your code here
+  } else if (page === 0 && size === 0) {
+    limit = null;
+    offset = null;
+    // Phase 2B: Add an error message to errorResult.errors of
+    // 'Requires valid page and size params' when page or size is invalid
+    // Your code here
   } else {
-    limit = 0;
-    offset = 0;
+    errorResult.errors.push({ message: "Requires valid page and size params" });
   }
-  // Phase 2B (optional): Special case to return all students (page=0, size=0)
-  // Phase 2B: Add an error message to errorResult.errors of
-  // 'Requires valid page and size params' when page or size is invalid
-  // Your code here
-
   // Phase 4: Student Search Filters
   /*
         firstName filter:

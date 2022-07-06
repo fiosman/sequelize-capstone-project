@@ -53,7 +53,10 @@ router.get("/", async (req, res, next) => {
                 message of 'Lefty should be either true or false' to
                 errorResult.errors
     */
-  const where = {};
+  const where = {
+    limit,
+    offset,
+  };
 
   // Your code here
 
@@ -73,6 +76,10 @@ router.get("/", async (req, res, next) => {
                 }
         */
   // Your code here
+
+  if (errorResult.errors.length > 0) {
+    res.status(400).json(errorResult);
+  }
 
   let result = {};
 

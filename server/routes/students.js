@@ -108,7 +108,11 @@ router.get("/", async (req, res, next) => {
             }
         */
   // Your code here
-
+  if (page === 0 && size === 0) {
+    result.page = 1;
+  } else {
+    result.page = page;
+  }
   // Phase 3B:
   // Include the total number of available pages for this query as a key
   // of pageCount in the response data

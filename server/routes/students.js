@@ -117,8 +117,10 @@ router.get("/", async (req, res, next) => {
   // Your code here
   if (page === 0 && size === 0) {
     result.page = 1;
+    result.pageCount = 1;
   } else {
     result.page = page;
+    result.pageCount = Math.ceil(result.rows.length / size);
   }
   // Phase 3B:
   // Include the total number of available pages for this query as a key

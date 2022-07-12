@@ -78,7 +78,7 @@ router.get("/", async (req, res, next) => {
   // Your code here
 
   if (errorResult.errors.length > 0) {
-    res.status(400).json(errorResult);
+    res.status(400).json({ ...errorResult, studentCount: 0 });
   }
 
   let result = {};

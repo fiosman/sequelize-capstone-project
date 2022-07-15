@@ -53,10 +53,7 @@ router.get("/", async (req, res, next) => {
                 message of 'Lefty should be either true or false' to
                 errorResult.errors
     */
-  const where = {
-    limit,
-    offset,
-  };
+  const where = {};
 
   // Your code here
 
@@ -102,6 +99,8 @@ router.get("/", async (req, res, next) => {
       ["lastName", "ASC"],
       ["firstName", "ASC"],
     ],
+    limit,
+    offset,
   });
 
   // Phase 2E: Include the page number as a key of page in the response data

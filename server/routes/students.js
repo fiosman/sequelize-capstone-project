@@ -16,12 +16,12 @@ router.get("/", async (req, res, next) => {
   let limit;
   let offset;
   // Phase 2B: Calculate limit and offset
-  if (page > 0 && size > 0) {
-    limit = size;
-    offset = (page - 1) * size;
+  if (Number(page) > 0 && Number(size) > 0) {
+    limit = Number(size);
+    offset = Number(page - 1) * Number(size);
     // Phase 2B (optional): Special case to return all students (page=0, size=0)
     // Your code here
-  } else if (page === 0 && size === 0) {
+  } else if (Number(page) === 0 && Number(size) === 0) {
     limit = null;
     offset = null;
     // Phase 2B: Add an error message to errorResult.errors of
@@ -114,11 +114,11 @@ router.get("/", async (req, res, next) => {
             }
         */
   // Your code here
-  if (page === 0 && size === 0) {
+  if (Number(page) === 0 && Number(size) === 0) {
     result.page = 1;
     result.pageCount = 1;
   } else {
-    result.page = page;
+    result.page = Number(page);
     result.pageCount = Math.ceil(result.rows.length / size);
   }
   // Phase 3B:

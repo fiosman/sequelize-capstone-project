@@ -53,7 +53,11 @@ router.get("/", async (req, res, next) => {
                 message of 'Lefty should be either true or false' to
                 errorResult.errors
     */
-  const where = {};
+  const where = {
+    firstName: {
+      [Op.iLike]: `%` + req.query.firstName + `%`,
+    },
+  };
 
   // Your code here
 

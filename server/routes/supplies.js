@@ -12,15 +12,13 @@ router.get("/category/:categoryName", async (req, res, next) => {
   // Order results by supply's name then handed
   // Return the found supplies as the response body
   try {
-    const supplies = await Supply.findAll(
-      { where: { category: req.params.categoryName } },
-      {
-        order: [
-          ["name", "ASC"],
-          ["handed", "ASC"],
-        ],
-      }
-    );
+    const supplies = await Supply.findAll({
+      where: { category: req.params.categoryName },
+      order: [
+        ["name", "ASC"],
+        ["handed", "ASC"],
+      ],
+    });
     res.json(supplies);
   } catch (err) {
     console.err(err);

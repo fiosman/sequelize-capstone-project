@@ -84,13 +84,7 @@ router.get("/", async (req, res, next) => {
   // limits and offsets as a property of count on the result
   // Note: This should be a new query
 
-  result.count = await Student.findAll({
-    attributes: ["id", "firstName", "lastName", "leftHanded"],
-    order: [
-      ["lastName", "ASC"],
-      ["firstName", "ASC"],
-    ],
-  });
+  result.count = await Student.count();
   result.rows = await Student.findAll({
     attributes: ["id", "firstName", "lastName", "leftHanded"],
     where,

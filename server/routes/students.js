@@ -18,7 +18,7 @@ router.get("/", async (req, res, next) => {
   // Phase 2B: Calculate limit and offset
   if (Number(page) > 0 && Number(size) > 0) {
     limit = Number(size);
-    offset = Number(page - 1) * Number(size);
+    offset = Number(page - 1) * 10;
     // Phase 2B (optional): Special case to return all students (page=0, size=0)
     // Your code here
   } else if (Number(page) === 0 && Number(size) === 0) {

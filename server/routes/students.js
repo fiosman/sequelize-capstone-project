@@ -63,14 +63,16 @@ router.get("/", async (req, res, next) => {
     where.lastName = { [Op.iLike]: `%` + req.query.lastName + `%` };
   }
 
-  if (req.query.lefty !== "false" && req.query.lefty !== "true") {
+  if (req.query.lefty && req.query.lefty !== "false" && req.query.lefty !== "true") {
     errorResult.errors.push({ message: "Lefty should be either true or false" });
   } else if (req.query.lefty === "true") {
-    // return left handed students
-  } else if (req.query.left === "false") {
-    // return right handed students
+    where.leftHanded = { [Op.eq]: "true" };
+  } else if (req.query.lefty === "false") {
+    where.leftHanded = { [Op.eq]: "false" };
   } else {
-    // return left + right handed students
+    where.leftHanded = {
+      [Op.or]: [{ leftHanded: { [Op.eq]: "false" } }, { leftHanded: { [Op.eq]: "true" } }],
+    };
   }
 
   // Your code here

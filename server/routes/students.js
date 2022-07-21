@@ -71,7 +71,7 @@ router.get("/", async (req, res, next) => {
     where.leftHanded = { [Op.eq]: "false" };
   } else {
     where.leftHanded = {
-      [Op.or]: [{ leftHanded: { [Op.eq]: "false" } }, { leftHanded: { [Op.eq]: "true" } }],
+      [Op.or]: ["false", "true"],
     };
   }
 

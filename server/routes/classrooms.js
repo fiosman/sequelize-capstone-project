@@ -3,7 +3,7 @@ const express = require("express");
 const router = express.Router();
 
 // Import model(s)
-const { Classroom } = require("../models");
+const { Classroom, Supply } = require("../models");
 const { Op } = require("sequelize");
 
 // List of classrooms
@@ -50,7 +50,9 @@ router.get("/", async (req, res, next) => {
 
 // Single classroom
 router.get("/:id", async (req, res, next) => {
-  let classroom = await Classroom.findByPk(req.params.id, {
+  let classroom = {};
+
+  const classroomDetails = await Classroom.findByPk(req.params.id, {
     attributes: ["id", "name", "studentLimit"],
     // Phase 7:
     // Include classroom supplies and order supplies by category then
@@ -61,11 +63,18 @@ router.get("/:id", async (req, res, next) => {
     // Your code here
   });
 
-  if (!classroom) {
+  if (!classroomDetails) {
     res.status(404);
     res.send({ message: "Classroom Not Found" });
+  } else {
+    classroom.classroomDetails = classroomDetails;
   }
 
+  const supplyCount = await Supply.count({ where: { classroomId: req.params.id } });
+
+  if (supplyCount) {
+    classroom.supplyCount = supplyCount;
+  }
   // Phase 5: Supply and Student counts, Overloaded classroom
   // Phase 5A: Find the number of supplies the classroom has and set it as
   // a property of supplyCount on the response

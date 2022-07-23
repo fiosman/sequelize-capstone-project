@@ -3,8 +3,9 @@ const express = require("express");
 const router = express.Router();
 
 // Import model(s)
-const { Classroom, Supply, StudentClassroom } = require("../models");
+const { Classroom, Supply, StudentClassroom, sequelize } = require("../models");
 const { Op } = require("sequelize");
+const Sequelize = require("sequelize");
 
 // List of classrooms
 router.get("/", async (req, res, next) => {
@@ -84,6 +85,16 @@ router.get("/:id", async (req, res, next) => {
     studentCount > classroomDetails.studentLimit
       ? (classroom.overloaded = true)
       : (classroom.overloaded = false);
+  }
+
+  const classroomAverage = await StudentClassroom.findOne({
+    where: { classroomId: req.params.id },
+    attributes: [[Sequelize.fn("AVG", Sequelize.col("grade")), "avgGrade"]],
+    raw: true, //to return only the datavalues
+  });
+
+  if (classroomAverage) {
+    classroom.avgGrade = classroomAverage.avgGrade;
   }
   // Phase 5: Supply and Student counts, Overloaded classroom
   // Phase 5A: Find the number of supplies the classroom has and set it as

@@ -3,7 +3,7 @@ const express = require("express");
 const router = express.Router();
 
 // Import model(s)
-const { Classroom, Supply } = require("../models");
+const { Classroom, Supply, StudentClassroom } = require("../models");
 const { Op } = require("sequelize");
 
 // List of classrooms
@@ -74,6 +74,12 @@ router.get("/:id", async (req, res, next) => {
 
   if (supplyCount) {
     classroom.supplyCount = supplyCount;
+  }
+
+  const studentCount = await StudentClassroom.count({ where: { classroomId: req.params.id } });
+
+  if (studentCount) {
+    classroom.studentCount = studentCount;
   }
   // Phase 5: Supply and Student counts, Overloaded classroom
   // Phase 5A: Find the number of supplies the classroom has and set it as

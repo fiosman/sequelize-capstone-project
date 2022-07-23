@@ -80,6 +80,10 @@ router.get("/:id", async (req, res, next) => {
 
   if (studentCount) {
     classroom.studentCount = studentCount;
+
+    studentCount > classroomDetails.studentLimit
+      ? (classroom.overLoaded = true)
+      : (classroom.overLoaded = false);
   }
   // Phase 5: Supply and Student counts, Overloaded classroom
   // Phase 5A: Find the number of supplies the classroom has and set it as

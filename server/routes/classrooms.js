@@ -39,6 +39,10 @@ router.get("/", async (req, res, next) => {
 
   // Your code here
 
+  if (req.query.name) {
+    where.name = { [Op.iLike]: `%` + req.query.name + `%` };
+  }
+
   const classrooms = await Classroom.findAll({
     attributes: ["id", "name", "studentLimit"],
     where,

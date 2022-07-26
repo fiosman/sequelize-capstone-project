@@ -43,6 +43,19 @@ router.get("/", async (req, res, next) => {
     where.name = { [Op.iLike]: `%` + req.query.name + `%` };
   }
 
+  if (req.query.studentLimit.includes(",")) {
+    const minLimit = Number(req.query.studentLimit.slice(0, req.query.studentLimit.indexOf(",")));
+    const maxLimit = Number(
+      req.query.studentLimit.slice(
+        req.query.studentLimit.indexOf(",") + 1,
+        req.query.studentLimit.length
+      )
+    );
+
+    if (!isNaN(minLimit) && !isNaN(maxLimit)) {
+    }
+  }
+
   const classrooms = await Classroom.findAll({
     attributes: ["id", "name", "studentLimit"],
     where,

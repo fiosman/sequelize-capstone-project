@@ -53,7 +53,10 @@ router.get("/", async (req, res, next) => {
     );
 
     if (!isNaN(minLimit) && !isNaN(maxLimit)) {
+      where.studentLimit = { [Op.between]: [Number(minLimit), Number(maxLimit)] };
     }
+  } else if (!req.query.studentLimit.includes(",") && !isNaN(req.query.studentLimit)) {
+    where.studentLimit = Number(req.query.studentLimit);
   }
 
   const classrooms = await Classroom.findAll({

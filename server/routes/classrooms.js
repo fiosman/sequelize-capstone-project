@@ -3,7 +3,7 @@ const express = require("express");
 const router = express.Router();
 
 // Import model(s)
-const { Classroom, Supply, StudentClassroom, sequelize } = require("../models");
+const { Classroom, Supply, Student, StudentClassroom } = require("../models");
 const { Op } = require("sequelize");
 const Sequelize = require("sequelize");
 
@@ -85,13 +85,17 @@ router.get("/:id", async (req, res, next) => {
 
   const classroomDetails = await Classroom.findByPk(req.params.id, {
     attributes: ["id", "name", "studentLimit"],
-    // Phase 7:
-    // Include classroom supplies and order supplies by category then
-    // name (both in ascending order)
-    // Include students of the classroom and order students by lastName
-    // then firstName (both in ascending order)
-    // (Optional): No need to include the StudentClassrooms
-    // Your code here
+    include: [
+      {
+        model: Supply,
+        attributes: ["id", "name", "category", "handed"],
+        separate: true,
+        order: [
+          ["category", "ASC"],
+          ["name", "ASC"],
+        ],
+      },
+    ],
   });
 
   if (!classroomDetails) {
@@ -99,22 +103,6 @@ router.get("/:id", async (req, res, next) => {
     res.send({ message: "Classroom Not Found" });
   } else {
     classroom.classroomDetails = classroomDetails;
-  }
-
-  const supplyCount = await Supply.count({ where: { classroomId: req.params.id } });
-
-  if (supplyCount) {
-    classroom.supplyCount = supplyCount;
-  }
-
-  const studentCount = await StudentClassroom.count({ where: { classroomId: req.params.id } });
-
-  if (studentCount) {
-    classroom.studentCount = studentCount;
-
-    studentCount > classroomDetails.studentLimit
-      ? (classroom.overloaded = true)
-      : (classroom.overloaded = false);
   }
 
   const classroomAverage = await StudentClassroom.findOne({

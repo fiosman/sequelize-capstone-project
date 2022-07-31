@@ -62,9 +62,9 @@ router.get("/", async (req, res, next) => {
       where.studentLimit = { [Op.between]: [Number(minLimit), Number(maxLimit)] };
     }
   } else if (!req.query.studentLimit.includes(",")) {
-    if (!isNaN(req.query.studentLimit) { 
+    if (!isNaN(req.query.studentLimit)) {
       where.studentLimit = Number(req.query.studentLimit);
-    } else { 
+    } else {
       errorResult.errors.push("Student Limit should be a integer");
     }
   }

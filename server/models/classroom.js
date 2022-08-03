@@ -12,7 +12,7 @@ module.exports = (sequelize, DataTypes) => {
       Classroom.hasMany(models.StudentClassroom, { foreignKey: "classroomId" });
       Classroom.belongsToMany(models.Student, {
         through: models.StudentClassroom,
-        foreignKey: "studentId",
+        foreignKey: "classroomId",
       });
       Classroom.hasMany(models.Supply, {
         foreignKey: "classroomId",

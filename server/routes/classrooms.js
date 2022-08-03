@@ -95,6 +95,15 @@ router.get("/:id", async (req, res, next) => {
           ["name", "ASC"],
         ],
       },
+      {
+        model: Student,
+        attributes: ["id", "firstName", "lastName", "leftHanded"],
+        order: [
+          ["lastName", "ASC"],
+          ["firstName", "ASC"],
+        ],
+        through: { attributes: [] },
+      },
     ],
   });
 

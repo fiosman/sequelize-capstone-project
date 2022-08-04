@@ -99,8 +99,8 @@ router.get("/:id", async (req, res, next) => {
         model: Student,
         attributes: ["id", "firstName", "lastName", "leftHanded"],
         order: [
-          ["lastName", "ASC"],
-          ["firstName", "ASC"],
+          [{ through: { model: StudentClassroom } }, "lastName", "ASC"],
+          [{ through: { model: StudentClassroom } }, "firstName", "ASC"],
         ],
         through: { attributes: [] },
       },

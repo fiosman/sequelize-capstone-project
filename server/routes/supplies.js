@@ -3,7 +3,7 @@ const express = require("express");
 const router = express.Router();
 
 // Import model(s)
-const { Supply } = require("../models");
+const { Supply, Classroom } = require("../models");
 
 // List of supplies by category
 router.get("/category/:categoryName", async (req, res, next) => {
@@ -14,6 +14,8 @@ router.get("/category/:categoryName", async (req, res, next) => {
   try {
     const supplies = await Supply.findAll({
       where: { category: req.params.categoryName },
+      attributes: ["id", "handed", "category", "name"],
+      include: [{ model: Classroom, attributes: ["id", "name"] }],
       order: [
         ["name", "ASC"],
         ["handed", "ASC"],

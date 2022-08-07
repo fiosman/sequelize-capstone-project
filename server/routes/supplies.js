@@ -23,7 +23,7 @@ router.get("/category/:categoryName", async (req, res, next) => {
     });
     res.json(supplies);
   } catch (err) {
-    console.err(err);
+    console.error(err);
   }
   // Phase 8A:
   // Include Classroom in the supplies query results

@@ -17,8 +17,8 @@ router.get("/category/:categoryName", async (req, res, next) => {
       attributes: ["id", "handed", "category", "name"],
       include: [{ model: Classroom, attributes: ["id", "name"] }],
       order: [
+        [{ model: Classroom, as: "classroom" }, "name", "ASC"],
         ["name", "ASC"],
-        ["handed", "ASC"],
       ],
     });
     res.json(supplies);

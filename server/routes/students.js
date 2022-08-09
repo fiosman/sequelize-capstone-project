@@ -3,7 +3,7 @@ const express = require("express");
 const router = express.Router();
 
 // Import model(s)
-const { Student } = require("../models");
+const { Student, Classroom, StudentClassroom } = require("../models");
 const { Op } = require("sequelize");
 
 // List
@@ -113,6 +113,7 @@ router.get("/", async (req, res, next) => {
       ["lastName", "ASC"],
       ["firstName", "ASC"],
     ],
+    include: [{ model: Classroom, through: StudentClassroom }],
     limit,
     offset,
   });

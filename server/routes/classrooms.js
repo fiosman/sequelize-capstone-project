@@ -54,8 +54,6 @@ router.get("/", async (req, res, next) => {
 
     if (minLimit > maxLimit || isNaN(minLimit) || isNaN(maxLimit)) {
       errorResult.errors.push("Student Limit should be two integers: min and max");
-
-      //test
     }
     //TODO: Error handling
     if (!isNaN(minLimit) && !isNaN(maxLimit)) {

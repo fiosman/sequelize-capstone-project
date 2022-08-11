@@ -113,7 +113,13 @@ router.get("/", async (req, res, next) => {
       ["lastName", "ASC"],
       ["firstName", "ASC"],
     ],
-    include: [{ model: Classroom, through: StudentClassroom }],
+    include: [
+      {
+        model: Classroom,
+        attributes: ["id", "name"],
+        through: { model: StudentClassroom, attributes: ["grade"] },
+      },
+    ],
     limit,
     offset,
   });

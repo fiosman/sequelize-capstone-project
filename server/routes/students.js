@@ -121,6 +121,7 @@ router.get("/", async (req, res, next) => {
     ],
     limit,
     offset,
+    order: [[Classroom, StudentClassroom, "grade", "DESC"]],
   });
 
   // Phase 2E: Include the page number as a key of page in the response data

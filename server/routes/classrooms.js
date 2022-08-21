@@ -43,7 +43,7 @@ router.get("/", async (req, res, next) => {
     where.name = { [Op.iLike]: `%` + req.query.name + `%` };
   }
 
-  if (req.query.studentLimit.includes(",")) {
+  if (req.query.studentLimit?.includes(",")) {
     const minLimit = Number(req.query.studentLimit.slice(0, req.query.studentLimit.indexOf(",")));
     const maxLimit = Number(
       req.query.studentLimit.slice(
@@ -59,7 +59,7 @@ router.get("/", async (req, res, next) => {
     if (!isNaN(minLimit) && !isNaN(maxLimit)) {
       where.studentLimit = { [Op.between]: [Number(minLimit), Number(maxLimit)] };
     }
-  } else if (!req.query.studentLimit.includes(",")) {
+  } else if (!req.query.studentLimit?.includes(",")) {
     if (!isNaN(req.query.studentLimit)) {
       where.studentLimit = Number(req.query.studentLimit);
     } else {
@@ -68,7 +68,7 @@ router.get("/", async (req, res, next) => {
   }
 
   const classrooms = await Classroom.findAll({
-    attributes: ["id", "name", "studentLimit"],
+    attributes: ["id", "name", "studentLimit", "createdAt", "updatedAt"],
     where,
     // Phase 1B: Order the Classroom search results
     // order: [["name", "ASC"]],

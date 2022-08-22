@@ -3,7 +3,7 @@ const express = require("express");
 const router = express.Router();
 
 // Import model(s)
-const { Classroom, Supply, Student, StudentClassroom } = require("../models");
+const { Classroom, Supply, Student, StudentClassroom, sequelize } = require("../models");
 const { Op } = require("sequelize");
 const Sequelize = require("sequelize");
 
@@ -68,8 +68,9 @@ router.get("/", async (req, res, next) => {
   }
 
   const classrooms = await Classroom.findAll({
-    attributes: ["id", "name", "studentLimit", "createdAt", "updatedAt"],
     where,
+    include: [{ model: StudentClassroom }],
+    attributes: ["id", "name", "studentLimit", "createdAt", "updatedAt"],
     // Phase 1B: Order the Classroom search results
     // order: [["name", "ASC"]],
   });

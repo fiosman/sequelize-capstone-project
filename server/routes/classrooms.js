@@ -69,7 +69,7 @@ router.get("/", async (req, res, next) => {
 
   const classrooms = await Classroom.findAll({
     where,
-    include: [{ model: StudentClassroom }],
+    include: [{ model: StudentClassroom, attributes: [] }],
     attributes: [
       "id",
       "name",

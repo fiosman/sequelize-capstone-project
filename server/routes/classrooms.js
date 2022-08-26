@@ -77,7 +77,7 @@ router.get("/", async (req, res, next) => {
       "createdAt",
       "updatedAt",
       [sequelize.fn("avg", sequelize.col("StudentClassrooms.grade")), "avgGrade"],
-      [sequelize.fn("count", sequelize.col("StudentClassrooms.grade")), "numStudents"],
+      [sequelize.fn("count", sequelize.col("StudentClassrooms.id")), "numStudents"],
     ],
     group: ["Classroom.id"],
     // Phase 1B: Order the Classroom search results

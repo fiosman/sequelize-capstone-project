@@ -121,6 +121,11 @@ router.get("/scissors/calculate", async (req, res, next) => {
   // classrooms
   // Your code here
 
+  result.numRightyScissorsStillNeeded =
+    Number(result.numRightHandedStudents) - Number(result.numRightyScissors);
+  result.numLeftyScissorsStillNeeded =
+    Number(result.numLeftHandedStudents) - Number(result.numLeftyScissors);
+
   res.json(result);
 });
 

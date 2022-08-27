@@ -4,6 +4,7 @@ const router = express.Router();
 
 // Import model(s)
 const { Supply, Classroom } = require("../models");
+const { Op } = require("sequelize");
 
 // List of supplies by category
 router.get("/category/:categoryName", async (req, res, next) => {
@@ -35,7 +36,6 @@ router.get("/category/:categoryName", async (req, res, next) => {
 router.get("/scissors/calculate", async (req, res, next) => {
   let result = {};
 
-  result.numRightyScissors = await Supply.findAll();
   // Phase 10A: Current number of scissors in all classrooms
   // result.numRightyScissors should equal the total number of all
   // right-handed "Safety Scissors" currently in all classrooms
@@ -45,6 +45,47 @@ router.get("/scissors/calculate", async (req, res, next) => {
   // "Safety Scissors" currently in all classrooms, regardless of
   // handed-ness
   // Your code here
+  result.numRightyScissors = await Supply.count({
+    where: {
+      classroomId: {
+        [Op.not]: null,
+      },
+      name: {
+        [Op.eq]: "Safety Scissors",
+      },
+      handed: {
+        [Op.eq]: "right",
+      },
+    },
+  });
+
+  result.numLeftyScissors = await Supply.count({
+    where: {
+      classroomId: {
+        [Op.not]: null,
+      },
+      name: {
+        [Op.eq]: "Safety Scissors",
+      },
+      handed: {
+        [Op.eq]: "left",
+      },
+    },
+  });
+
+  result.totalNumScissors = await Supply.count({
+    where: {
+      classroomId: {
+        [Op.not]: null,
+      },
+      name: {
+        [Op.eq]: "Safety Scissors",
+      },
+      handed: {
+        [Op.or]: ["left", "right"],
+      },
+    },
+  });
 
   // Phase 10B: Total number of right-handed and left-handed students in all
   // classrooms

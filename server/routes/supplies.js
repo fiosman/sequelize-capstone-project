@@ -35,6 +35,7 @@ router.get("/category/:categoryName", async (req, res, next) => {
 router.get("/scissors/calculate", async (req, res, next) => {
   let result = {};
 
+  result.numRightyScissors = await Supply.findAll();
   // Phase 10A: Current number of scissors in all classrooms
   // result.numRightyScissors should equal the total number of all
   // right-handed "Safety Scissors" currently in all classrooms
